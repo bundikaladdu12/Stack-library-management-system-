@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#f7f8fa" />
+  <meta name="description" content="A minimalist library management system built with linked lists, queues and stacks." />
+  <title>Stacks — Library Management</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="Main navigation">
+      <a class="brand" href="#overview" aria-label="Stacks home">
+        <span class="brand-mark"><span></span><span></span><span></span></span>
+        <span class="brand-name">stacks<span class="brand-period">.</span><small>LIBRARY SYSTEM</small></span>
+      </a>
+      <div class="nav-label">WORKSPACE</div>
+      <nav class="side-nav">
+        <button class="nav-item active" data-page="overview"><span class="nav-icon icon-grid"></span>Overview</button>
+        <button class="nav-item" data-page="books"><span class="nav-icon icon-book"></span>Book collection</button>
+        <button class="nav-item" data-page="requests"><span class="nav-icon icon-queue"></span>Issue requests <span class="nav-count" id="side-queue-count">0</span></button>
+        <button class="nav-item" data-page="activity"><span class="nav-icon icon-activity"></span>Activity log</button>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="system-card"><span class="system-dot"></span><div><strong>System operational</strong><small>Local storage enabled</small></div></div>
+        <div class="sidebar-foot">DATA STRUCTURES PRACTICAL <span>v1.0.0</span></div>
+      </div>
+    </aside>
+
+    <main class="main-area">
+      <header class="topbar">
+        <div class="breadcrumbs"><span>Workspace</span><span class="crumb-slash">/</span><strong id="crumb-current">Overview</strong></div>
+        <div class="topbar-right"><span class="today-label" id="today-label"></span><span class="avatar">LM</span></div>
+      </header>
+
+      <div class="mobile-brand"><a class="brand" href="#overview"><span class="brand-mark"><span></span><span></span><span></span></span><span class="brand-name">stacks<span class="brand-period">.</span></span></a><span class="avatar">LM</span></div>
+
+      <section class="page active" id="page-overview">
+        <div class="page-heading"><div><div class="eyebrow">LIBRARY OPERATIONS</div><h1>Good afternoon.</h1><p class="subtitle">Here’s what’s happening in your library today.</p></div><button class="button button-primary" data-action="add-book"><span class="plus">+</span> Add a book</button></div>
+        <div class="stats-grid">
+          <article class="stat-card"><div class="stat-top"><span>Total books</span><span class="stat-symbol symbol-navy"><span class="icon-book"></span></span></div><div class="stat-number" id="stat-total">0</div><div class="stat-foot"><span class="stat-note">Across your collection</span></div></article>
+          <article class="stat-card"><div class="stat-top"><span>Available</span><span class="stat-symbol symbol-green"><span class="icon-check"></span></span></div><div class="stat-number" id="stat-available">0</div><div class="stat-foot"><span class="status-dot green-dot"></span><span class="stat-note">Ready to issue</span></div></article>
+          <article class="stat-card"><div class="stat-top"><span>Currently issued</span><span class="stat-symbol symbol-blue"><span class="icon-arrow"></span></span></div><div class="stat-number" id="stat-issued">0</div><div class="stat-foot"><span class="stat-note">With library members</span></div></article>
+          <article class="stat-card"><div class="stat-top"><span>Pending requests</span><span class="stat-symbol symbol-amber"><span class="icon-queue"></span></span></div><div class="stat-number" id="stat-pending">0</div><div class="stat-foot"><span class="stat-note">Processed first-in, first-out</span></div></article>
+        </div>
+        <div class="overview-grid">
+          <section class="panel collection-panel"><div class="panel-heading"><div><h2>Recently added</h2><p>Your latest additions to the collection</p></div><button class="text-button" data-goto="books">View collection <span>↗</span></button></div><div id="recent-books" class="recent-list"></div><div id="recent-empty" class="empty-state hidden"><span class="empty-line"></span><strong>No books yet</strong><p>Add your first book to start building the collection.</p><button class="button button-secondary" data-action="add-book">Add a book</button></div></section>
+          <section class="panel activity-panel"><div class="panel-heading"><div><h2>Recent activity</h2><p>A live record of library operations</p></div><button class="icon-button" data-goto="activity" aria-label="View activity">↗</button></div><div id="recent-activity" class="activity-list"></div><div id="activity-empty" class="empty-state compact hidden"><strong>No activity recorded</strong><p>Transactions will appear here.</p></div></section>
+        </div>
+        <section class="principles-strip"><div class="principle-title"><span class="eyebrow">UNDER THE HOOD</span><h2>Three structures.<br>One simple system.</h2></div><div class="principle"><span class="structure-number">01</span><div><strong>Linked list</strong><p>Dynamic book records without a fixed capacity.</p><code>O(n) search</code></div></div><div class="principle"><span class="structure-number">02</span><div><strong>Queue · FIFO</strong><p>Requests are handled in the order they arrive.</p><code>O(1) enqueue / dequeue</code></div></div><div class="principle"><span class="structure-number">03</span><div><strong>Stack · LIFO</strong><p>The most recent operation is tracked first.</p><code>O(1) push / pop</code></div></div></section>
+      </section>
+
+      <section class="page" id="page-books">
+        <div class="page-heading"><div><div class="eyebrow">COLLECTION MANAGEMENT</div><h1>Book collection</h1><p class="subtitle">Manage titles, availability and library records.</p></div><button class="button button-primary" data-action="add-book"><span class="plus">+</span> Add a book</button></div>
+        <section class="panel table-panel"><div class="table-toolbar"><div class="search-wrap"><span class="search-icon"></span><input id="book-search" type="search" placeholder="Search by title, author or ID" aria-label="Search books"></div><select id="book-filter" class="filter-select" aria-label="Filter books"><option value="all">All books</option><option value="available">Available</option><option value="issued">Issued</option></select><span class="result-count" id="book-result-count">0 records</span></div><div class="book-list-header"><span>BOOK DETAILS</span><span>BOOK ID</span><span>STATUS</span><span class="align-right">ACTIONS</span></div><div id="book-list" class="book-list"></div><div id="books-empty" class="empty-state hidden"><span class="empty-line"></span><strong>No matching books</strong><p>Try another search, or add a new title to your collection.</p><button class="button button-secondary" data-action="add-book">Add a book</button></div></section>
+        <div class="data-note"><span class="note-mark">i</span><span>Book records are maintained in a manually implemented linked list and saved locally in this browser.</span></div>
+      </section>
+
+      <section class="page" id="page-requests">
+        <div class="page-heading"><div><div class="eyebrow">FIFO REQUEST SCHEDULING</div><h1>Issue requests</h1><p class="subtitle">Requests are processed in the order they were received.</p></div><button class="button button-primary" data-action="new-request"><span class="plus">+</span> New request</button></div>
+        <div class="queue-summary"><div><span class="eyebrow">QUEUE STATUS</span><div class="queue-big"><strong id="queue-total">0</strong><span>pending requests</span></div></div><div class="queue-rule"><span class="rule-line"></span><span>FIRST IN</span><span class="rule-arrow">→</span><span>FIRST OUT</span></div></div>
+        <section class="panel request-panel"><div class="panel-heading"><div><h2>Request queue</h2><p>Oldest request is always at the top.</p></div><button id="process-request" class="button button-secondary" disabled>Process next request <span>→</span></button></div><div class="request-table-head"><span>POSITION</span><span>BOOK</span><span>REQUESTED BY</span><span>REQUEST TIME</span><span>STATUS</span></div><div id="request-list" class="request-list"></div><div id="requests-empty" class="empty-state hidden"><span class="empty-line"></span><strong>Queue is clear</strong><p>New issue requests will appear here in FIFO order.</p><button class="button button-secondary" data-action="new-request">Create a request</button></div></section>
+        <div class="data-note"><span class="note-mark">i</span><span>The queue uses front and rear pointers. Processing a request removes the oldest entry first.</span></div>
+      </section>
+
+      <section class="page" id="page-activity">
+        <div class="page-heading"><div><div class="eyebrow">AUDIT TRAIL</div><h1>Activity log</h1><p class="subtitle">A record of recent changes and transactions.</p></div><button class="button button-secondary" id="clear-activity">Clear history</button></div>
+        <section class="panel activity-full-panel"><div class="panel-heading"><div><h2>Transaction history</h2><p>Newest operation appears first.</p></div><span class="stack-chip">STACK · LIFO</span></div><div id="full-activity" class="full-activity-list"></div><div id="full-activity-empty" class="empty-state hidden"><span class="empty-line"></span><strong>No transactions yet</strong><p>Book additions, issues and returns will be recorded here.</p></div></section>
+        <div class="data-note"><span class="note-mark">i</span><span>Activity history is managed as a stack. The latest operation is at the top.</span></div>
+      </section>
+
+      <footer class="footer"><span>STACKS LIBRARY MANAGEMENT</span><span>BUILT FOR DATA STRUCTURES PRACTICAL</span></footer>
+    </main>
+  </div>
+
+  <nav class="mobile-nav" aria-label="Mobile navigation"><button class="mobile-nav-item active" data-page="overview"><span class="nav-icon icon-grid"></span><span>Overview</span></button><button class="mobile-nav-item" data-page="books"><span class="nav-icon icon-book"></span><span>Books</span></button><button class="mobile-nav-item" data-page="requests"><span class="nav-icon icon-queue"></span><span>Requests</span></button><button class="mobile-nav-item" data-page="activity"><span class="nav-icon icon-activity"></span><span>Activity</span></button></nav>
+
+  <div class="modal-backdrop hidden" id="modal-backdrop" role="presentation"><section class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title"><div class="modal-header"><div><div class="eyebrow" id="modal-eyebrow">COLLECTION MANAGEMENT</div><h2 id="modal-title">Add a book</h2><p id="modal-description">Enter the details for the new book record.</p></div><button class="modal-close" id="modal-close" aria-label="Close dialog">×</button></div><form id="modal-form"><div id="modal-fields" class="modal-fields"></div><p id="modal-error" class="form-error hidden" role="alert"></p><div class="modal-actions"><button type="button" class="button button-secondary" id="modal-cancel">Cancel</button><button type="submit" class="button button-primary" id="modal-submit">Save book</button></div></form></section></div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="script.js" defer></script>
+</body>
+</html>
